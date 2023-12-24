@@ -7,4 +7,16 @@ pkgs: {
     wrapQtAppsHook = pkgs.libsForQt5.wrapQtAppsHook;
     kdecoration = pkgs.libsForQt5.kdecoration;
   };
+  nx-kstyle = pkgs.callPackage ./nx-kstyle.nix {
+    inherit (pkgs) stdenv cmake extra-cmake-modules qt5;
+    plasma-framework = pkgs.libsForQt5.plasma-framework;
+    wrapQtAppsHook = pkgs.libsForQt5.wrapQtAppsHook;
+    kdecoration = pkgs.libsForQt5.kdecoration;
+  };
+  nx-window-deco = pkgs.callPackage ./nx-window-deco.nix {
+    inherit  (pkgs) stdenv cmake extra-cmake-modules qt5;
+    plasma-framework = pkgs.libsForQt5.plasma-framework;
+    wrapQtAppsHook = pkgs.libsForQt5.wrapQtAppsHook;
+    kdecoration = pkgs.libsForQt5.kdecoration;
+  };
 }

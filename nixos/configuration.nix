@@ -11,6 +11,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    inputs.twixvim.nixosModules.default
     ./hardware-configuration.nix
   ];
 
@@ -117,6 +118,14 @@
     };
   };
 
+  nixosModules.twixvim = {
+    enable = true;
+    settings = {
+      development.enable = false;
+      direnv.enable = true;
+    };
+  };
+
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -125,6 +134,9 @@
     curl
     neovim
     reversal-icon-theme
+    nx-clock-applet
+    nx-kstyle
+    nx-window-deco
     latte-dock
   ];
 
