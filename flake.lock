@@ -426,11 +426,11 @@
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1703417309,
-        "narHash": "sha256-U322h91dMnAyevUp74e17Qn745gdL3so4pnBzWsEvXE=",
+        "lastModified": 1703420218,
+        "narHash": "sha256-YfT6NP2Y05WPQ1NG9+ECBB84QHSblaVQRceB05aYq18=",
         "owner": "null0xeth",
         "repo": "twixvim",
-        "rev": "7b175ad49009591c2e11acf56918f14b7d4527fd",
+        "rev": "6a038111fe92b3923d73ac2d7a4371c7b42f2eb7",
         "type": "github"
       },
       "original": {

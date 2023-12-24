@@ -13,6 +13,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.twixvim.nixosModules.default
     ./hardware-configuration.nix
+    ../modules/nixos/direnv.nix
   ];
 
   nixpkgs = {
@@ -118,26 +119,18 @@
     };
   };
 
-  nixosModules.twixvim = {
-    enable = true;
-    settings = {
-      development.enable = false;
-      direnv.enable = true;
-    };
-  };
-
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
     wget
     git
     curl
-    neovim
     reversal-icon-theme
     nx-clock-applet
     nx-kstyle
     nx-window-deco
     latte-dock
+    gcc
   ];
 
   services = {
@@ -158,6 +151,14 @@
       pulse.enable = true;
     };
   };
+
+  # nixosModules.twixvim = {
+  # enable = true;
+  #  settings = {
+  #    development.enable = false;
+  #    direnv.enable = true;
+  #  };
+  # };
 
   console.keyMap = "fr_CH";
 
