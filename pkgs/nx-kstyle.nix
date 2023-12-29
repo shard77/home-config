@@ -7,7 +7,7 @@
   qt5,
   kdecoration,
   plasma-framework,
-  wrapQtAppsHook
+  wrapQtAppsHook,
 }:
 stdenv.mkDerivation rec {
   pname = "nx-kstyle";

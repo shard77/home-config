@@ -11,15 +11,13 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    inputs.twixvim.nixosModules.default
     ./hardware-configuration.nix
-    ../modules/nixos/direnv.nix
+    ./direnv.nix
+    ./hyprland.nix
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
@@ -34,9 +32,7 @@
       #   });
       # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
@@ -63,13 +59,20 @@
     auto-optimise-store = true;
   };
 
-  # FIXME: Add the rest of your current configuration
-
-  # TODO: Set your hostname
   networking = {
     hostName = "omen";
     networkmanager.enable = true;
     nameservers = ["8.8.8.8" "1.1.1.1"];
+
+    firewall = rec {
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+      allowedUDPPortRanges = allowedTCPPortRanges;
+    };
   };
 
   time.timeZone = "Europe/Paris";
@@ -102,46 +105,38 @@
       initialPassword = "12345";
       isNormalUser = true;
       shell = pkgs.fish;
-      extraGroups = ["networkmanager" "wheel"];
-      packages = with pkgs; [
-        brave
-        kitty
-        fish
-        neofetch
-        armcord
-        keepassxc
-        unstable.vscode
-        eza
-        openssh
-        starship
-        nix-prefetch-scripts
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "audio"
+        "video"
       ];
     };
   };
 
-  programs.fish.enable = true;
+  fonts.packages = with pkgs; [
+    noto-fonts-emoji
+    lexend
+    monaspace
+    (unstable.nerdfonts.override {fonts = ["Monaspace"];})
+  ];
+
+  programs = {
+    fish.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     wget
     git
     curl
-    reversal-icon-theme
-    nx-clock-applet
-    nx-kstyle
-    nx-window-deco
-    latte-dock
-    gcc
+    lshw
+    greetd.tuigreet
   ];
 
-  services = {
-    xserver = {
-      enable = true;
-      layout = "ch";
-      xkbVariant = "fr";
-      displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
-    };
+  sound.enable = true;
+  security.rtkit.enable = true;
 
+  services = {
     printing.enable = true;
 
     pipewire = {
@@ -149,16 +144,11 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      jack.enable = true;
     };
-  };
 
-  # nixosModules.twixvim = {
-  # enable = true;
-  #  settings = {
-  #    development.enable = false;
-  #    direnv.enable = true;
-  #  };
-  # };
+    envfs.enable = true;
+  };
 
   console.keyMap = "fr_CH";
 
@@ -171,5 +161,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }

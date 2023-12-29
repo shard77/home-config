@@ -1,11 +1,8 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   theme = "monokai";
   opacity = 0.95;
   font-size = 11;
-in
-{
+in {
   stylix.image = ../../assets/wallpaper.png;
   stylix.polarity = "dark";
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/${theme}.yaml";

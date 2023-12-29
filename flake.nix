@@ -4,25 +4,31 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # TODO: Add any other flake you might need
-    # hardware.url = "github:nixos/nixos-hardware";
-
-    # Shameless plug: looking for a way to nixify your themes and make
-    # everything match nicely? Try nix-colors!
-    # nix-colors.url = "github:misterio77/nix-colors";
-
-    # stylix.url = "github:danth/stylix";
-
+    # twixvim vim framework
     twixvim.url = "github:null0xeth/twixvim";
+
+    ags.url = "github:Aylur/ags";
+
+    lf-icons = {
+      url = "github:gokcehan/lf";
+      flake = false;
+    };
+
+    more-waita = {
+      url = "github:somepaulo/MoreWaita";
+      flake = false;
+    };
+
+    # plasma manager
+    # plasma-manager.url = "github:pjones/plasma-manager";
+    # plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
   outputs = {
@@ -59,12 +65,16 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      # FIXME replace with your hostname
       omen = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          # > Our main nixos configuration file <
           ./nixos/configuration.nix
+          # home-manager.nixosModules.home-manager
+          # {
+          #  home-manager.extraSpecialArgs = {inherit inputs;};
+          # home-manager.users.shard.imports = [ ./home-manager/home.nix ];
+          #   home-manager.sharedModules = [plasma-manager.homeManagerModules.plasma-manager];
+          #}
         ];
       };
     };
