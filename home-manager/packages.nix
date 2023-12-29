@@ -48,5 +48,8 @@
     # langs
     gcc
     gnumake
+    nodejs
+    typescript
+    eslint
   ];
 }

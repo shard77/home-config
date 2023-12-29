@@ -83,7 +83,7 @@ in {
       name = cursor-theme;
       package = cursor-package;
     };
-    iconTheme.name = "Whitesur";
+    iconTheme.name = "MoreWaita";
     gtk3.extraCss = ''
       headerbar, .titlebar,
       .csd:not(.popup):not(tooltip):not(messagedialog) decoration{

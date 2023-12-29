@@ -61,6 +61,14 @@
     # Reusable home-manager modules you might want to export
     # These are usually stuff you would upstream into home-manager
     homeManagerModules = import ./modules/home-manager;
+    
+    # custom devshells
+    #devShells = forAllSystems (system: {
+    #  school = import ./shells/school-shell.nix {
+    #    inherit (nixpkgs.legacyPackages.${system}) pkgs;
+    #	inherit home-manager;
+    #  };
+    # });
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
