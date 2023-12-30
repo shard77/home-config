@@ -72,6 +72,9 @@ in {
       ".local/share/icons/MoreWaita" = {
         source = "${moreWaita}/share/icons";
       };
+      ".local/share/icons/Reversal-dark" = {
+        source = "${pkgs.reversal-icon-theme}/share/icons/";
+      };
     };
   };
 
@@ -83,7 +86,7 @@ in {
       name = cursor-theme;
       package = cursor-package;
     };
-    iconTheme.name = "MoreWaita";
+    iconTheme.name = "Reversal-dark";
     gtk3.extraCss = ''
       headerbar, .titlebar,
       .csd:not(.popup):not(tooltip):not(messagedialog) decoration{

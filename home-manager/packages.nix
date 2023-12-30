@@ -51,5 +51,8 @@
     nodejs
     typescript
     eslint
+    nil
+    deadnix
+    statix
   ];
 }

@@ -22,7 +22,7 @@
     ./hyprland.nix
     ./packages.nix
     ./git.nix
-    ./vscode.nix
+    # ./vscode.nix
     ./fish.nix
     ./kitty.nix
     ./starship.nix
