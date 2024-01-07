@@ -19,8 +19,10 @@
 
     settings = {
       exec-once = [
+        "copyq --start-server"
         "ags -b hypr"
         "hyprctl setcursor Qogir 24"
+        # "copyq --start-server"
       ];
 
       monitor = [
@@ -102,7 +104,7 @@
           ",Print,	${e} -r 'recorder.screenshot()'"
           "SHIFT,Print,    ${e} -r 'recorder.screenshot(true)'"
           "SUPER, Return, exec, kitty"
-          "SUPER, W, exec, brave"
+          "SUPER, W, exec, firefox"
           "SUPER, E, exec, kitty"
 
           ", XF86Launch1, exec, ${yt}/bin/yt"

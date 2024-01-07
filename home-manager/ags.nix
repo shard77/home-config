@@ -3,20 +3,19 @@
   pkgs,
   ...
 }: {
-  programs.vscode = {
+  imports = [inputs.ags.homeManagerModules.default];
+
+  home.packages = with pkgs; [
+    sassc
+    (python311.withPackages (p: [p.python-pam]))
+  ];
+
+  programs.ags = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      rust-lang.rust-analyzer
-      github.copilot
-      github.copilot-chat
-      astro-build.astro-vscode
-      pkief.material-icon-theme
-      serayuzgur.crates
-      equinusocio.vsc-material-theme
-      esbenp.prettier-vscode
-      ms-python.python
-      ms-python.vscode-pylance
-      bradlc.vscode-tailwindcss
+    configDir = ../ags;
+    extraPackages = with pkgs; [
+      libgtop
+      libsoup_3
     ];
   };
 }

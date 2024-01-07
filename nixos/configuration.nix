@@ -14,6 +14,7 @@
     ./hardware-configuration.nix
     ./direnv.nix
     ./hyprland.nix
+    ./firefox.nix
   ];
 
   nixpkgs = {
@@ -132,6 +133,21 @@
     lshw
     greetd.tuigreet
   ];
+
+  virtualisation = {
+    virtualbox = {
+      host = {
+        enable = true;
+        enableExtensionPack = true;
+      };
+      guest = {
+        enable = true;
+        x11 = true;
+      };
+    };
+  };
+
+  users.extraGroups.vboxusers.members = [ "shard" ];
 
   sound.enable = true;
   security.rtkit.enable = true;

@@ -22,10 +22,11 @@
     ./hyprland.nix
     ./packages.nix
     ./git.nix
-    # ./vscode.nix
     ./fish.nix
     ./kitty.nix
     ./starship.nix
+    ./zoxide.nix
+    ./firefox/firefox.nix
   ];
 
   nixpkgs = {

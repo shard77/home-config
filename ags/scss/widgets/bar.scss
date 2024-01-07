@@ -49,6 +49,10 @@ $button-radius: if($bar-style == 'floating', max(0, $radii - $bar-spacing), $rad
 }
 
 .panel {
+    .end image {
+        -gtk-icon-theme: "MoreWaita";
+    }
+
     @if $bar-style == 'normal' {
         background-color: $bg-color;
     }

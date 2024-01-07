@@ -11,25 +11,29 @@
   with gnome; [
     (import ./colorscript.nix {inherit pkgs;})
 
-    brave
+    firefox
     kitty
     fish
     neofetch
     armcord
     keepassxc
-    # unstable.vscode
+    unstable.vscode
     openssh
     starship
     icon-library
     dconf-editor
     d-spy
-
     # audio
     (mpv.override {scripts = [mpvScripts.mpris];})
 
     # tools
     eza
+    zip
+    file
+    unzip
+    zoxide
     bat
+    zellij
     inotify-tools
 
     # hyprland pkgs
@@ -44,11 +48,13 @@
     pavucontrol
     brightnessctl
     swww
+    copyq
 
     # langs
     gcc
     gnumake
-    nodejs
+    unstable.nodejs
+    pnpm
     typescript
     eslint
     nil
