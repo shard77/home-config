@@ -135,16 +135,16 @@
   ];
 
   virtualisation = {
-    virtualbox = {
-      host = {
-        enable = true;
-        enableExtensionPack = true;
-      };
-      guest = {
-        enable = true;
-        x11 = true;
-      };
-    };
+    #virtualbox = {
+    #  host = {
+    #    enable = true;
+    #    enableExtensionPack = true;
+    #  };
+    #  guest = {
+    #    enable = true;
+    #    x11 = true;
+    #  };
+    #};
   };
 
   users.extraGroups.vboxusers.members = [ "shard" ];

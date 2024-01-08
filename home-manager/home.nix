@@ -26,6 +26,7 @@
     ./kitty.nix
     ./starship.nix
     ./zoxide.nix
+    ./zellij.nix
     ./firefox/firefox.nix
   ];
 
