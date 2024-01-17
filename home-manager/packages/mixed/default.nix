@@ -38,6 +38,8 @@
     zellij
     inotify-tools
     manix
+    yazi
+    ripgrep
 
     # hyprland pkgs
     wl-gammactl

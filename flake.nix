@@ -13,8 +13,8 @@
     ags.url = "github:Aylur/ags";
 
     nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/nixvim/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     
     lf-icons = {
