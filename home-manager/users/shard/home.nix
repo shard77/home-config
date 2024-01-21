@@ -22,7 +22,7 @@
     ../../utils/lf.nix
     ../../utils/dconf.nix
     ../../utils/zoxide.nix
-    ../../utils/nixvim.nix    
+    ../../utils/nixvim
     ../../terminal/yazi.nix
     ../../terminal/git
     ../../terminal/fish
@@ -30,7 +30,6 @@
     ../../terminal/starship
     ../../browsers/firefox
     ../../packages/mixed
-    
   ];
 
   nixpkgs = {
@@ -65,7 +64,7 @@
   };
 
   programs.home-manager.enable = true;
-  
+
   services = {
     kdeconnect = {
       enable = true;
