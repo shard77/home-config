@@ -1,2 +1,2 @@
 # DO NOT COPY THIS CONFIG
-this config is outdated and not stable!
+this config could be outdated, for personal usage and not stable!
