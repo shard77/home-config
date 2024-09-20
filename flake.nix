@@ -1,87 +1,91 @@
 {
-  description = "shard's nixOS config";
+  description = "Shard's NixOS configuration";
 
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    ags.url = "github:Aylur/ags";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    lf-icons = {
-      url = "github:gokcehan/lf";
-      flake = false;
-    };
+    nixvim.url = "github:shard77/nixvim";
 
-    more-waita = {
-      url = "github:somepaulo/MoreWaita";
-      flake = false;
-    };
+    zjstatus.url = "github:dj95/zjstatus";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    # Supported systems for your flake packages, shell, etc.
-    systems = [
-      "x86_64-linux"
-    ];
-    # This is a function that generates an attribute by calling a function you
-    # pass to it, with each system as an argument
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-  in {
-    # Your custom packages
-    # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+  outputs = inputs:
+    with inputs; let
+      nixpkgsWithOverlays = system: (import nixpkgs rec {
+        inherit system;
 
-    # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
-    # Reusable nixos modules you might want to export
-    # These are usually stuff you would upstream into nixpkgs
-    nixosModules = import ./modules/nixos;
-    # Reusable home-manager modules you might want to export
-    # These are usually stuff you would upstream into home-manager
-    homeManagerModules = import ./modules/home-manager;
+        config = {
+          allowUnfree = true;
+          permittedInsecurePackages = [
+          ];
+        };
 
-    # custom devshells
-    #devShells = forAllSystems (system: {
-    #  school = import ./shells/school-shell.nix {
-    #    inherit (nixpkgs.legacyPackages.${system}) pkgs;
-    #	inherit home-manager;
-    #  };
-    # });
-
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      omen = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./hosts/omen/configuration.nix
+        overlays = [
+          (_final: prev: {
+            unstable = import nixpkgs-unstable {
+              inherit (prev) system;
+              inherit config;
+            };
+          })
         ];
+      });
+
+      configurationDefaults = args: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.backupFileExtension = "hm-backup";
+        home-manager.extraSpecialArgs = args;
       };
-      bastion = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+
+      argDefaults = {
+        inherit inputs self nix-index-database;
+        channels = {
+          inherit nixpkgs nixpkgs-unstable;
+        };
+      };
+
+      mkNixosConfiguration =
+        { system ? "x86_64-linux"
+        , hostname
+        , username
+        , args ? { }
+        , modules
+        ,
+        }:
+        let
+          specialArgs = argDefaults // { inherit hostname username; } // args;
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          pkgs = nixpkgsWithOverlays system;
+          modules =
+            [
+              (configurationDefaults specialArgs)
+              home-manager.nixosModules.home-manager
+            ]
+            ++ modules;
+        };
+    in
+    {
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+
+      nixosConfigurations.nixos = mkNixosConfiguration {
+        hostname = "nixos";
+        username = "shard";
         modules = [
-          ./hosts/bastion/configuration.nix
+          nixos-wsl.nixosModules.wsl
+          ./wsl.nix
         ];
       };
     };
-  };
 }
