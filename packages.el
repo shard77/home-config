@@ -57,3 +57,5 @@
 (package! resize-window)
 (package! sublimity)
 (package! tldr)
+(package! yara-mode)
+(package! pocket-reader)

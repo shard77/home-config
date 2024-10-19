@@ -12,10 +12,10 @@
 ;; (setq user-full-name "John Doe"
 ;;       user-mail-address "john@doe.com")
 
-(setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 15 :weight 'regular))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15 :weight 'regular))
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;
+                                        ;
 ;; - `doom-font' -- the primary font to use
 ;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
 ;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
@@ -41,12 +41,13 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+(setq fancy-splash-image "~/Downloads/emacs-imgs/custom-image-2.png")
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -79,3 +80,12 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; (with-eval-after-load 'lsp-mode
+;;   (add-to-list 'lsp-language-id-configuration
+;;                '(yara-mode . "yara"))
+
+;;   (lsp-register-client
+;;    (make-lsp-client :new-connection (lsp-stdio-connection "yls")
+;;                     :activation-fn (lsp-activate-on "yara")
+;;                     :server-id 'yls)))
